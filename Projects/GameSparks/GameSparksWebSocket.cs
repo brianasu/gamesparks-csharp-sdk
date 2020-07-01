@@ -86,7 +86,7 @@ namespace GameSparks
 			this.onBinaryMessage = onBinaryMessage;
 
             //ws.DataReceived += new EventHandler<DataReceivedEventArgs>(webSocketClient_BinaryMessageReceived);
-            ws.OnMessage += Ws_OnMessageBinary;
+            ws.OnMessageBinary += Ws_OnMessageBinary;
 		}
    
 
@@ -143,7 +143,7 @@ namespace GameSparks
 				ws.OnClose -= Ws_OnClose;
 				ws.OnError -= Ws_OnError;
 				ws.OnMessage -= Ws_OnMessage;
-				ws.OnMessage -= Ws_OnMessageBinary;
+				ws.OnMessageBinary -= Ws_OnMessageBinary;
                 ws.Close();
                 
                 if (onClose != null)

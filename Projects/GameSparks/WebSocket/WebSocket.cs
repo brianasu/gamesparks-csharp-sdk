@@ -271,6 +271,7 @@ namespace NativeWebSocket
     {
         public event WebSocketOpenEventHandler OnOpen;
         public event WebSocketMessageEventHandler OnMessage;
+        public event WebSocketMessageEventHandler OnMessageBinary;
         public event WebSocketErrorEventHandler OnError;
         public event WebSocketCloseEventHandler OnClose;
 
@@ -471,15 +472,19 @@ namespace NativeWebSocket
         }
 
         private Mutex m_MessageListMutex = new Mutex();
+        private Mutex m_MessageListBinaryMutex = new Mutex();
         private List<byte[]> m_MessageList = new List<byte[]>();
+        private List<byte[]> m_MesssageListBinary = new List<byte[]>();
 
         // simple dispatcher for queued messages.
         public void DispatchMessageQueue()
         {
             // lock mutex, copy queue content and clear the queue.
             m_MessageListMutex.WaitOne();
+
             List<byte[]> messageListCopy = new List<byte[]>();
             messageListCopy.AddRange(m_MessageList);
+
             m_MessageList.Clear();
             // release mutex to allow the websocket to add new messages
             m_MessageListMutex.ReleaseMutex();
@@ -487,6 +492,22 @@ namespace NativeWebSocket
             foreach (byte[] bytes in messageListCopy)
             {
                 OnMessage?.Invoke(bytes);
+            }
+
+
+            // lock mutex, copy queue content and clear the queue.
+            m_MessageListBinaryMutex.WaitOne();
+
+            List<byte[]> messageListBinaryCopy = new List<byte[]>();
+            messageListBinaryCopy.AddRange(m_MesssageListBinary);
+
+            m_MesssageListBinary.Clear();
+            // release mutex to allow the websocket to add new messages
+            m_MessageListBinaryMutex.ReleaseMutex();
+
+            foreach (byte[] bytes in messageListBinaryCopy)
+            {
+                OnMessageBinary?.Invoke(bytes);
             }
         }
 
@@ -526,9 +547,13 @@ namespace NativeWebSocket
                         }
                         else if (result.MessageType == WebSocketMessageType.Binary)
                         {
-                            m_MessageListMutex.WaitOne();
-                            m_MessageList.Add(ms.ToArray());
-                            m_MessageListMutex.ReleaseMutex();
+                            //m_MessageListMutex.WaitOne();
+                            //m_MessageList.Add(ms.ToArray());
+                            //m_MessageListMutex.ReleaseMutex();
+
+                            m_MessageListBinaryMutex.WaitOne();
+                            m_MesssageListBinary.Add(ms.ToArray());
+                            m_MessageListBinaryMutex.ReleaseMutex();
                         }
                         else if (result.MessageType == WebSocketMessageType.Close)
                         {
