@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GameSparks.Api</RootNamespace>
     <AssemblyName>GameSparks.Api</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

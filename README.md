@@ -1,3 +1,5 @@
+## Fork replacing websocket4net with NativeWebSocket https://github.com/endel/NativeWebSocket
+
 ## Gamesparks Unity Sources
 
 This repository contains the sources for the binaries included with the GameSparks Unity SDK.
