@@ -28,7 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <OutputPath>..\..\..\foodgame\Assets\GameSparks\Plugins</OutputPath>
+    <OutputPath>..\GameSparksUnity\Assets\GameSparks</OutputPath>
     <DefineConstants>NO_SPINWAIT_CLASS</DefineConstants>
     <DocumentationFile>bin\Release\GameSparks.XML</DocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
